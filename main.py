@@ -197,7 +197,9 @@ def start():
     schedule.every().friday.at("11:37").do(enterZoomMac, e)
     schedule.every().friday.at("13:22").do(enterZoomMac, f)
     schedule.every().friday.at("14:17").do(enterZoomMac, d)
-Main()
+
+if __name__ == "__main__" :
+    Main()
 while True:
     schedule.run_pending()
     time.sleep(1)
