@@ -4,6 +4,9 @@ import datetime
 import schedule
 import time
 import os
+import selenium
+from selenium import webdriver
+from selenium import *
 a11 = '''
 ####### ####### ####### #     #    ### #     # 
      #  #     # #     # ##   ##     #  ##    # 
@@ -101,6 +104,46 @@ def enterZoomMac(code):
     pyautogui.press("enter")
     print("Macro Finished :)")
     os.system("say Macro Finished. Quit your zoom after class finished. However, do not quit this program unless this is your last class today")
+
+def enterZoomMac1(code):
+    code = code.replace(" ","")
+    webUrl = "https://zoom.us/j/"+code+"#success"
+
+    driver = webdriver.Chrome(executable_path='/Users/juneseokkwon/PycharmProjects/zoomAuto/chromedriver')
+    driver.get(webUrl)
+    button = driver.find_element_by_class_name('_3Gj8x8oc')
+    button.click()
+
+
+
+
+
+
+
+
+
+    webbrowser.open(webUrl)
+    time.sleep(9)
+    pyautogui.press('tab')
+    time.sleep(0.2)
+    pyautogui.press('tab')
+    time.sleep(0.2)
+    pyautogui.press('tab')
+    time.sleep(0.2)
+    pyautogui.press('tab')
+    time.sleep(0.2)
+    pyautogui.press('tab')
+    time.sleep(0.2)
+    pyautogui.press('enter')
+    time.sleep(0.2)
+    pyautogui.press('tab')
+    time.sleep(0.2)
+    pyautogui.press('enter')
+    pyautogui.typewrite("12345",interval=0.02)
+    time.sleep(1)
+    pyautogui.press("enter")
+
+
 def Main():
     if not os.path.isfile('schedule.txt'):
         baba = open("schedule.txt","w+")
@@ -173,6 +216,7 @@ def start():
     schedule.every().tuesday.at("11:37").do(enterZoomMac, sa)
     schedule.every().tuesday.at("13:22").do(enterZoomMac, sb)
     schedule.every().tuesday.at("14:17").do(enterZoomMac, sc)
+    #test
 
     #wednesday
     schedule.every().wednesday.at("08:27").do(enterZoomMac, hr)
@@ -201,7 +245,8 @@ def start():
     schedule.every().friday.at("14:17").do(enterZoomMac, d)
 
 if __name__ == "__main__" :
-    Main()
+    #Main()
+    enterZoomMac1("916 0703 9445 ")
 while True:
     schedule.run_pending()
     time.sleep(1)
