@@ -1,12 +1,13 @@
 import pyautogui
-import webbrowser
 import datetime
 import schedule
 import time
 import os
-import selenium
 from selenium import webdriver
 from selenium import *
+import pathlib
+from win32com.client import Dispatch
+
 a11 = '''
 ####### ####### ####### #     #    ### #     # 
      #  #     # #     # ##   ##     #  ##    # 
@@ -88,62 +89,42 @@ def setup():
         avsdfdas = input()
 
 def enterZoomMac(code):
-    print("DO NOT TOUCH! MACRO WORKING!!")
-    os.system("say Alert! Macro Starting! Do not touch your computer!")
-    time.sleep(5)
-    webbrowser.open("https://zoom.us/join")
-    time.sleep(3)
-    pyautogui.typewrite(code, interval=0.05)
-    time.sleep(1)
-    pyautogui.press("enter")
-    time.sleep(3)
-    pyautogui.press("enter")
-    time.sleep(4)
-    pyautogui.typewrite("12345", interval=0.02) #password
-    time.sleep(1)
-    pyautogui.press("enter")
-    print("Macro Finished :)")
-    os.system("say Macro Finished. Quit your zoom after class finished. However, do not quit this program unless this is your last class today")
+    if(code != "x"):
+        speak = Dispatch("SAPI.SpVoice")
+        speak.Speak("Program started! Do not touch your computer until finished!")
+        print("LOG: Program started! Do not touch your computer until finished!")
+        time.sleep(2)
+        code = code.replace(" ","")
+        webUrl = "https://zoom.us/j/"+code+"#success"
+        a = str(pathlib.Path().absolute())
+        driver = webdriver.Chrome(executable_path=a+"/chromedriver.exe")
+        driver.get(webUrl)
+        time.sleep(5)
+        button = driver.find_element_by_class_name('_3Gj8x8oc')
+        button.click()
+        time.sleep(7)
+        pyautogui.press('tab')
+        time.sleep(0.2)
+        pyautogui.press('tab')
+        time.sleep(0.2)
+        pyautogui.press('space')
+        time.sleep(0.2)
+        driver.close()
+        time.sleep(5)
+        pyautogui.typewrite('12345',interval=0.02)
+        time.sleep(0.4)
+        pyautogui.press('enter')
+        driver.quit()
+        speak.Speak("Program finished! you may touch your computer. Also, Do not turn me off unless this is your last class")
+        print("Log: Program finished! you may touch your computer. Also, Do not turn me off unless this is your last class")
+    else:
+        speak = Dispatch("SAPI.SpVoice")
+        speak.Speak("It is self study period. enjoy")
+        print("Log: It is self study period. enjoy :)")
 
 def enterZoomMac1(code):
-    code = code.replace(" ","")
-    webUrl = "https://zoom.us/j/"+code+"#success"
-
-    driver = webdriver.Chrome(executable_path='/Users/juneseokkwon/PycharmProjects/zoomAuto/chromedriver')
-    driver.get(webUrl)
-    button = driver.find_element_by_class_name('_3Gj8x8oc')
-    button.click()
-
-
-
-
-
-
-
-
-
-    webbrowser.open(webUrl)
-    time.sleep(9)
-    pyautogui.press('tab')
-    time.sleep(0.2)
-    pyautogui.press('tab')
-    time.sleep(0.2)
-    pyautogui.press('tab')
-    time.sleep(0.2)
-    pyautogui.press('tab')
-    time.sleep(0.2)
-    pyautogui.press('tab')
-    time.sleep(0.2)
-    pyautogui.press('enter')
-    time.sleep(0.2)
-    pyautogui.press('tab')
-    time.sleep(0.2)
-    pyautogui.press('enter')
-    pyautogui.typewrite("12345",interval=0.02)
-    time.sleep(1)
-    pyautogui.press("enter")
-
-
+    print(code)
+    print("run!")
 def Main():
     if not os.path.isfile('schedule.txt'):
         baba = open("schedule.txt","w+")
@@ -170,8 +151,7 @@ def Main():
     elif(input1 == "start" or input1 == "\"start\""):
         start()
 def start():
-    print("Current time is: "+str(datetime.datetime.now()))
-    print("\n\n\n\n\nI will turn on your zoom Automatically. I will keep time for you :)\n ALSO, DO NOT CLOSE THIS WINDOW! (YOU MAY SHRINK IT)")
+    print("\n\n\n\n\n\n\n\n\nI will turn on your zoom Automatically. I will keep time for you :)\n ALSO, DO NOT CLOSE THIS WINDOW! (YOU MAY SHRINK IT)")
     array = []
     with open('schedule.txt') as f:
         for f1 in f:
@@ -216,7 +196,6 @@ def start():
     schedule.every().tuesday.at("11:37").do(enterZoomMac, sa)
     schedule.every().tuesday.at("13:22").do(enterZoomMac, sb)
     schedule.every().tuesday.at("14:17").do(enterZoomMac, sc)
-    #test
 
     #wednesday
     schedule.every().wednesday.at("08:27").do(enterZoomMac, hr)
@@ -227,6 +206,7 @@ def start():
     schedule.every().wednesday.at("13:22").do(enterZoomMac, f)
     schedule.every().wednesday.at("14:17").do(enterZoomMac, d)
     schedule.every().wednesday.at("15:12").do(enterZoomMac, hr)
+
     #thursday
     schedule.every().thursday.at("08:27").do(enterZoomMac, hr)
     schedule.every().thursday.at("08:52").do(enterZoomMac, se)
@@ -244,9 +224,11 @@ def start():
     schedule.every().friday.at("13:22").do(enterZoomMac, f)
     schedule.every().friday.at("14:17").do(enterZoomMac, d)
 
+
 if __name__ == "__main__" :
-    #Main()
-    enterZoomMac1("916 0703 9445 ")
+    Main()
+
+
 while True:
     schedule.run_pending()
     time.sleep(1)
