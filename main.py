@@ -80,7 +80,8 @@ def setup():
     Hr = input()
     f.write("\n"+Hr)
     f.close()
-    Main()
+    print("setup complete! rerun program :)",end = "")
+    avsdfdas = input()
 
 def enterZoomMac(code):
     print("DO NOT TOUCH! MACRO WORKING!!")
