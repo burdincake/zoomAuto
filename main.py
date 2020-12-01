@@ -171,6 +171,10 @@ def start():
     schedule.every().tuesday.at("11:37").do(enterZoomMac, sa)
     schedule.every().tuesday.at("13:22").do(enterZoomMac, sb)
     schedule.every().tuesday.at("14:17").do(enterZoomMac, sc)
+
+    schedule.every().tuesday.at("09:55").do(enterZoomMac, sc)
+    schedule.every().tuesday.at("09:56").do(enterZoomMac, sc)
+
     #wednesday
     schedule.every().wednesday.at("08:27").do(enterZoomMac, hr)
     schedule.every().wednesday.at("08:52").do(enterZoomMac, b)
