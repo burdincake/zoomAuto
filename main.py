@@ -124,6 +124,11 @@ def Main():
         setup()
     elif(input1 == "start" or input1 == "\"start\""):
         start()
+
+if __name__ == "__main__" :
+    Main()
+
+
 def start():
     print("Current time is: "+str(datetime.datetime.now()))
     print("\n\n\n\n\nI will turn on your zoom Automatically. I will keep time for you :)\n ALSO, DO NOT CLOSE THIS WINDOW! (YOU MAY SHRINK IT)")
@@ -197,9 +202,9 @@ def start():
     schedule.every().friday.at("11:37").do(enterZoomMac, e)
     schedule.every().friday.at("13:22").do(enterZoomMac, f)
     schedule.every().friday.at("14:17").do(enterZoomMac, d)
+    start()
 
-if __name__ == "__main__" :
-    Main()
+
 while True:
     schedule.run_pending()
     time.sleep(1)
