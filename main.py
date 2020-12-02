@@ -1,5 +1,4 @@
 import pyautogui
-import datetime
 import schedule
 import time
 import os
@@ -26,6 +25,13 @@ def setup():
     baba.close()
     print("Hello user!\n welcome to ZoomAuto :)")
     print("I will tell you what to do each step.\nThis only takes less than 5 minutes\nyou would only need to do this once")
+    webUrl = "https://naver.com/"
+    speak = Dispatch("SAPI.SpVoice")
+    speak.Speak("Press Access Allow if popup pops up")
+    a = str(pathlib.Path().absolute())
+    driver = webdriver.Chrome(executable_path=a + "/chromedriver.exe")
+    driver.get(webUrl)
+    driver.quit()
     f = open("schedule.txt", "a")
     #name
     print("Enter your name: ", end="")
@@ -206,6 +212,9 @@ def start():
     schedule.every().wednesday.at("13:22").do(enterZoomMac, f)
     schedule.every().wednesday.at("14:17").do(enterZoomMac, d)
     schedule.every().wednesday.at("15:12").do(enterZoomMac, hr)
+
+
+
 
     #thursday
     schedule.every().thursday.at("08:27").do(enterZoomMac, hr)
